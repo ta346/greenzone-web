@@ -6,3 +6,4 @@ altair
 ee
 ipywidgets
 pandas
+ipykernel
