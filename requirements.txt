@@ -3,3 +3,5 @@ geemap
 git+git://github.com/giswqs/geemap.git
 altair
 git+git://github.com/altair-viz/altair.git
+ee
+ipywidgets
