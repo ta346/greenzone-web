@@ -1,0 +1,94 @@
+/* App styles */
+.app-container {
+  text-align: left;
+}
+
+h1 {
+  margin-bottom: 20px;
+}
+
+/* Main container styles using Flexbox */
+.main-container {
+  display: flex;
+}
+
+/* Sidebar styles */
+.sidebar {
+  background-color: #f0f0f0;
+  padding: 20px;
+  position: relative; /* Add relative positioning to the sidebar */
+}
+
+/* Add padding to the region-select container */
+.region-select {
+  padding-bottom: 20px;
+}
+
+/* Style for the "Select Region" header */
+.region-select h3 {
+  margin: 0 0 10px; /* Add margin to separate the header from dropdowns */
+}
+
+
+/* Map container styles */
+.map-container {
+  flex: 1;
+  position: relative;
+  height: 500px;
+}
+
+
+.sidebar.expanded {
+  width: 200px;
+}
+
+button {
+  margin-bottom: 20px;
+}
+
+/* YearSlider styles */
+.year-slider-container {
+  padding-bottom: 5px;
+}
+
+.year-slider {
+  width: 100%;
+}
+
+.selected-year {
+  text-align: center;
+  font-weight: regular;
+}
+
+/* Vegetation Indices styles */
+.vegetation-indices-container {
+  width: 100%; /* Set the container to 100% wide */
+  /* Add any other desired styles for the container */
+}
+
+/* Dropdown styles */
+.dropdown-container {
+  width: 100%;
+  /* Add any other desired styles for the container */
+}
+
+.dropdown-select {
+  width: 100%;
+  padding: 8px;
+  font-size: 14px;
+  /* Add any other desired styles for the select element */
+}
+
+/* PastureOnlyCheckbox.css */
+
+/* Style for the checkbox container */
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+}
+
+/* Style for the checkbox input */
+.checkbox-input {
+  margin-right: 8px;
+}
