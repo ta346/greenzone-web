@@ -2,7 +2,7 @@ import ee
 import pandas as pd
 
 def create_reduce_region_function(geometry,
-                                  reducer=ee.Reducer.mean(),
+                                  reducer,
                                   scale=1000,
                                   crs='EPSG:4326',
                                   bestEffort=True,
@@ -56,7 +56,7 @@ def create_reduce_region_function(geometry,
     """
 
     stat = img.reduceRegion(
-        reducer=reducer,
+        reducer=ee.Reducer.mean(),
         geometry=geometry,
         scale=scale,
         crs=crs,
@@ -138,7 +138,7 @@ def reduce_regions_function(reduction_regions,
     
   return reduce_regions_function
 
-  # Define a function to transfer feature properties to a dictionary.
+# Function to transfer feature properties to a dictionary.
 def fc_to_dict(fc):
     """Creates multiple regions reduction function.
 

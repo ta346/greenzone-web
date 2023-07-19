@@ -1,11 +1,10 @@
 # coding=utf-8
 """ Functions for masks """
-from concurrent.futures.process import _MAX_WINDOWS_WORKERS
 import ee
-import utils
+from .utils import bitwiseExtract, get_from_dict
+
 
 #----------------------------------------------------------------------------------------------------------------------------------------
-
 def image_mask(from_image, mask_parameter = None):
 
     """
@@ -150,10 +149,10 @@ def landsat578_cloud(masks = ['dilutedCloud', 'cirrus', 'cloud', 'shadow']):
         
         qa = image.select('QA_PIXEL')
 
-        dilutedCloud = utils.bitwiseExtract(qa, 1, 1, 'dilutedCloud').eq(0) # dilated Cloud
-        cirrus = utils.bitwiseExtract(qa, 2, 2, 'cirrus').eq(0) # Cirrus
-        cloud = utils.bitwiseExtract(qa, 3, 3, 'cloud').eq(0) # cloud
-        cloudShadow = utils.bitwiseExtract(qa, 4, 4, 'cloudShadow').eq(0) # cloud shadow
+        dilutedCloud = bitwiseExtract(qa, 1, 1, 'dilutedCloud').eq(0) # dilated Cloud
+        cirrus = bitwiseExtract(qa, 2, 2, 'cirrus').eq(0) # Cirrus
+        cloud = bitwiseExtract(qa, 3, 3, 'cloud').eq(0) # cloud
+        cloudShadow = bitwiseExtract(qa, 4, 4, 'cloudShadow').eq(0) # cloud shadow
 
         # Bits 1 is diluted cloud; 3 cloud, and 5 cloud shadow
         # dilutedCloud = (1 << 1)
@@ -176,7 +175,7 @@ def landsat578_cloud(masks = ['dilutedCloud', 'cirrus', 'cloud', 'shadow']):
             'cloudShadow' : cloudShadow
         })
         
-        masks_list = utils.get_from_dict(options, cloud_dict)
+        masks_list = get_from_dict(options, cloud_dict)
 
         def compute(img, previous):
             previous = ee.Image(previous)
@@ -240,7 +239,7 @@ def modis43A_cloud(masks = [
             'BRDF_Albedo_Band_Mandatory_Quality_Band7': band7
         })
         
-        masks_list = utils.get_from_dict(options, cloud_dict)
+        masks_list = get_from_dict(options, cloud_dict)
 
         def compute(img, previous):
             previous = ee.Image(previous)
@@ -272,15 +271,15 @@ def sentinel_cloud_mask(masks = ['cloud', 'cirrus']):
         
         qa = image.select('QA60')
 
-        cloud = utils.bitwiseExtract(qa, 10, 10, 'cloud').eq(0) # cloud
-        cirrus = utils.bitwiseExtract(qa, 11, 11, 'cirrus').eq(0) # Cirrus
+        cloud = bitwiseExtract(qa, 10, 10, 'cloud').eq(0) # cloud
+        cirrus = bitwiseExtract(qa, 11, 11, 'cirrus').eq(0) # Cirrus
 
         cloud_dict = ee.Dictionary({
             'cloud' : cloud,
             'cirrus' : cirrus
         })
         
-        masks_list = utils.get_from_dict(options, cloud_dict)
+        masks_list = get_from_dict(options, cloud_dict)
 
         def compute(img, previous):
             previous = ee.Image(previous)
@@ -311,9 +310,9 @@ def modis_8days_cloud_mask(masks = ['cloud', 'shadow', 'cirrus']):
         
         qa = image.select('StateQA')
 
-        cloud = utils.bitwiseExtract(qa, 0, 1, 'cloud').eq(0) # cloud
-        shadow = utils.bitwiseExtract(qa, 2, 2, 'shadow').eq(0) # shadow
-        cirrus = utils.bitwiseExtract(qa, 8, 9, 'cirrus').eq(0) # Cirrus
+        cloud = bitwiseExtract(qa, 0, 1, 'cloud').eq(0) # cloud
+        shadow = bitwiseExtract(qa, 2, 2, 'shadow').eq(0) # shadow
+        cirrus = bitwiseExtract(qa, 8, 9, 'cirrus').eq(0) # Cirrus
 
         cloud_dict = ee.Dictionary({
             'cloud' : cloud,
@@ -321,7 +320,7 @@ def modis_8days_cloud_mask(masks = ['cloud', 'shadow', 'cirrus']):
             'cirrus' : cirrus       
         })
         
-        masks_list = utils.get_from_dict(options, cloud_dict)
+        masks_list = get_from_dict(options, cloud_dict)
 
         def compute(img, previous):
             previous = ee.Image(previous)

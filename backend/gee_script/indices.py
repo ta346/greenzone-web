@@ -1,7 +1,8 @@
+import ee
+from .utils import applyScaleFactors
+
 # coding=utf-8
 """ Functions for calculation indices """
-import ee
-
 # FORMULAS = {
 #     'NDVI': '(NIR-RED)/(NIR+RED)',
 #     'EVI': 'G*((NIR-RED)/(NIR+(C1*RED)-(C2*BLUE)+L))',

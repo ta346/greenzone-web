@@ -1,12 +1,4 @@
-/* App styles */
-.app-container {
-  text-align: left;
-}
-
-h1 {
-  margin-bottom: 20px;
-  text-align: center;
-}
+/* App.css */
 
 /* Main container styles using Flexbox */
 .main-container {
@@ -17,7 +9,8 @@ h1 {
 .sidebar {
   background-color: #f3f3f7;
   padding: 20px;
-  position: relative; /* Add relative positioning to the sidebar */
+  min-width: 200px; /* Set a minimum width for the sidebar */
+  flex: 0 0 10%; /* Set a fixed width for the sidebar (20% of the main container) */
 }
 
 /* Add padding to the region-select container */
@@ -35,8 +28,8 @@ h1 {
   flex: 1;
   position: relative;
   height: 500px;
+  min-width: 90%; /* Set a minimum width for the map (80% of the main container) */
 }
-
 
 .sidebar.expanded {
   width: 200px;
@@ -65,15 +58,6 @@ button {
   width: 100%; /* Set the container to 100% wide */
   /* Add any other desired styles for the container */
 }
-
-
-/* 
-.dropdown-select {
-  width: 100%;
-  padding: 8px;
-  font-size: 12px;
-  
-  /* Add any other desired styles for the select element */
 
 /* Dropdown styles */
 .dropdown-container {
@@ -132,4 +116,28 @@ button {
 /* Style for the checkbox input */
 .checkbox-input {
   margin-right: 8px;
+}
+
+/* Styles for the buttons container */
+.button-container {
+  display: flex;
+  flex-direction: row; /* Stack the buttons horizontally */
+  justify-content: center; /* Center items horizontally */
+  gap: 4px; /* Adjust the gap as needed */
+  margin-top: 16px;
+}
+
+/* Styles for the buttons */
+.button {
+  padding: 4px 4px;
+  background-color: #cbd1d8;
+  color: #000;
+  border: 2px solid #3c584c;
+  cursor: pointer;
+}
+
+/* Styles for active buttons */
+.button.active {
+  background-color: #6E896A;
+  color: #fff;
 }

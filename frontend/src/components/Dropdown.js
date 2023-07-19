@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../styles/App.css'; // Optional CSS for styling the dropdowns
+import '../styles/Sidebar.css'; // Optional CSS for styling the dropdowns
 
 const Dropdown = ({ options, onSelect }) => {
   const [selectedOption, setSelectedOption] = useState(options[0]);
