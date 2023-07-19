@@ -1,14 +1,19 @@
+// App.js
 import React from 'react';
 import MapComponent from './components/MapComponent';
 import Sidebar from './components/Sidebar';
-import './styles/App.css';
+import Header from './components/Header'; // Import the Header component
+import './styles/App.css'; // Import the global CSS
+
+// Your province and soum JSON data
+import provinceData from './assets/soum_province_names.json';
 
 function App() {
   return (
-    <div className="app-container">
-      <h1>Mongolian Rangeland Monitoring Platform</h1>
+    <div>
+      <Header /> {/* Add the Header component */}
       <div className="main-container">
-        <Sidebar />
+        <Sidebar provinceData={provinceData} />
         <MapComponent />
       </div>
     </div>

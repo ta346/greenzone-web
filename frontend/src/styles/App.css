@@ -5,6 +5,7 @@
 
 h1 {
   margin-bottom: 20px;
+  text-align: center;
 }
 
 /* Main container styles using Flexbox */
@@ -14,21 +15,20 @@ h1 {
 
 /* Sidebar styles */
 .sidebar {
-  background-color: #f0f0f0;
+  background-color: #f3f3f7;
   padding: 20px;
   position: relative; /* Add relative positioning to the sidebar */
 }
 
 /* Add padding to the region-select container */
 .region-select {
-  padding-bottom: 20px;
+  padding-bottom: 10px;
 }
 
 /* Style for the "Select Region" header */
-.region-select h3 {
+.region-select h4 {
   margin: 0 0 10px; /* Add margin to separate the header from dropdowns */
 }
-
 
 /* Map container styles */
 .map-container {
@@ -66,17 +66,58 @@ button {
   /* Add any other desired styles for the container */
 }
 
-/* Dropdown styles */
-.dropdown-container {
-  width: 100%;
-  /* Add any other desired styles for the container */
-}
 
+/* 
 .dropdown-select {
   width: 100%;
   padding: 8px;
-  font-size: 14px;
+  font-size: 12px;
+  
   /* Add any other desired styles for the select element */
+
+/* Dropdown styles */
+.dropdown-container {
+  width: 100%;
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-select {
+  cursor: pointer;
+  padding: 6px 16px;
+  background-color: #cbd1d8;
+  color: #000000;
+  border: none;
+  border-radius: 4px;
+  width: 100%;
+}
+
+.dropdown-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1;
+  min-width: 160px;
+  background-color: #cbd1d8;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  padding: 8px 0;
+  list-style: none;
+}
+
+.dropdown-item {
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.dropdown-item:hover {
+  background-color: #ddd;
+}
+
+.dropdown-item.active {
+  background-color: #007bff;
+  color: #fff;
 }
 
 /* PastureOnlyCheckbox.css */
@@ -85,7 +126,7 @@ button {
 .checkbox-container {
   display: flex;
   align-items: center;
-  padding: 8px;
+  padding: 2px;
 }
 
 /* Style for the checkbox input */

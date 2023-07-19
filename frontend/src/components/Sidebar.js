@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Dropdown from './Dropdown';
 import '../styles/App.css'; // Optional CSS for styling the dropdowns
 
@@ -13,17 +13,27 @@ const PastureOnlyCheckbox = () => {
     );
   };
 
-const Sidebar = () => {
-  // Replace the options with your actual data from the back end
-  const provinces = ["Province 1", "Province 2", "Province 3", /* ... */];
-  const soums = ["Soum 1", "Soum 2", "Soum 3", /* ... */];
+
+const Sidebar = ({ provinceData }) => {
+  const provinces = Object.keys(provinceData);
+  const [expanded, setExpanded] = useState(true);
+  const [selectedProvince, setSelectedProvince] = useState(provinces[0]);
+  const [selectedSoum, setSelectedSoum] = useState(provinceData[provinces[0]]);
   const vegetationIndices = ["NDVI", "EVI", "SAVI", /* ... */];
   const years = ["2023", "2022", "2021", "2020", "2019", "2018", "2017"];
 
-  const [expanded, setExpanded] = useState(true);
-
   const handleToggleExpand = () => {
-    setExpanded(!expanded);
+    setExpanded((prevExpanded) => !prevExpanded);
+  };
+
+  const handleProvinceChange = (selectedProvince) => {
+    setSelectedProvince(selectedProvince);
+    setSelectedSoum(provinceData[selectedProvince]);
+  };
+
+  const handleSoumChange = (selectedSoum) => {
+    // Handle the selected soum here or pass the value to any parent component
+    console.log(selectedSoum);
   };
 
   return (
@@ -34,13 +44,29 @@ const Sidebar = () => {
       {expanded && (
         <>
           <div className="region-select">
-            <h3>Select Region</h3>
-            <Dropdown options={provinces} />
-            <Dropdown options={soums} />
+            <h4>Select Region</h4>
+            <Dropdown options={provinces} onSelect={handleProvinceChange} />
           </div>
-          <Dropdown options={vegetationIndices} />
-          <Dropdown options={years} />
-          <PastureOnlyCheckbox /> {/* Nested component */}
+
+          <div className="region-select">
+            <h4>Select Soum</h4>
+            <Dropdown options={selectedSoum} onSelect={handleSoumChange} />
+          </div>
+
+          <div className="region-select">
+            <h4>Select Indicators</h4>
+            <Dropdown options={vegetationIndices} />
+          </div>
+
+          <div className="region-select">
+            <h4>Select Year</h4>
+            <Dropdown options={years} />
+          </div>
+
+          <div className="region-select">
+            <h4>Select Grazing</h4>
+            <PastureOnlyCheckbox />
+          </div>
           {/* Add other components or content as needed */}
         </>
       )}
