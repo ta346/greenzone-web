@@ -273,9 +273,17 @@ def harmonizationRoy_fromETMplus_OLI(img):
     
     return img.addBands(y, overwrite = True)
 
-def clip_aoi(box):
-  
-  def clip(img):
-    return img.clip(box)
-  
-  return clip
+def clip_aoi(image, box):
+   return image.clip(box)
+
+def get_image_metadata(image):
+
+    crs = image.projection().getInfo()['crs']
+    crs_transform = image.projection().getInfo()['transform']
+    dimensions = image.getInfo()['bands'][0]['dimensions']
+
+    return ee.Dictionary({
+        'crs': crs,
+        'crs_transform': crs_transform,
+        'dimensions': dimensions
+    })

@@ -8,7 +8,7 @@ from multiprocessing.sharedctypes import Value
 from xmlrpc.client import Boolean, boolean
 
 import ee
-from .utils import get_from_dict, applyScaleFactors, modis43A_scale_factor, harmonizationRoy_fromETM_OLI, harmonizationRoy_fromETMplus_OLI
+from .utils import get_from_dict, applyScaleFactors, modis43A_scale_factor, harmonizationRoy_fromETM_OLI, harmonizationRoy_fromETMplus_OLI, get_image_metadata
 from .mask import landsat578_cloud, modis43A_cloud, image_mask
 from .indices import ndvi, ndwi, msavi, evi, nirv
 
@@ -118,38 +118,54 @@ def get_landsat_collection(dateIni,
                         .map(nirv(nir = "SR_B4", red = "SR_B3", bandname="nirv"))
                         .select(["ndvi", "msavi", "evi", "nirv", "ndwi"])) # masking out dilutedcloud, cloud, cirrus, and shadow
 
+    # landsat = landsat.map(lambda image: clip_aoi(image, box))
+
     return landsat
 
 def make_composite(collection, startMonth, endMonth, box):
-    # function takes startYear, endYear, landcover mask (1985-1999: maskLC2000, 2000-2009: maskLC2010, 2010-2020: maskLC2020), shp = bag or soum, file name: str, folder_name: str (google drive folder to download to)
     collection = ee.ImageCollection(collection)
-    startMonth = ee.Number(startMonth)
-    endMonth = ee.Number(endMonth)
+    # startMonth = ee.Number(startMonth)
+    # endMonth = ee.Number(endMonth)
 
-    # get range of years in the collection
+    # Get range of years in the collection
     collection_sorted = collection.sort('system:time_start')
     range_date = collection_sorted.reduceColumns(ee.Reducer.minMax(), ['system:time_start'])
     startYear = int(ee.Date(range_date.get('min')).format('YYYY').getInfo())
     endYear = int(ee.Date(range_date.get('max')).format('YYYY').getInfo())
-    stepList = ee.List.sequence(startYear, endYear)
+    stepList = ee.List(ee.List.sequence(startYear, endYear))
     
-    def get_annual_median_composite(year):
+    meta_data = get_image_metadata(collection_sorted.first())
 
-        startDate = ee.Date.fromYMD(year,startMonth,1)
-        endDate = ee.Date.fromYMD(year,endMonth,31)
+    def get_annual_median_composite(year):
+        # Convert startMonth and endMonth to ee.Number outside the mapped function
+        startMonth_ee = ee.Number(startMonth)
+        endMonth_ee = ee.Number(endMonth)
+        
+        startDate = ee.Date.fromYMD(year, startMonth_ee, 1)
+        endDate = ee.Date.fromYMD(year, endMonth_ee, 31)
         
         composite = (collection_sorted.filterBounds(box)
-                            .filterDate(startDate, endDate))
+                                      .filterDate(startDate, endDate))
         
-        composite_i = composite.median().clip(box).set('system:time_start', startDate)
-        
-        return composite_i
-    
-    filterCollection = stepList.map(get_annual_median_composite)
+        # Calculate the median composite
+        composite_median = composite.median().clip(box).set('system:time_start', startDate)
 
-    yearlyComposites = ee.ImageCollection.fromImages(filterCollection) #return single image for each year
+       # Set the metadata properties for the individual image
+        composite_median = composite_median.set('crs', meta_data.get('crs'))
+        composite_median = composite_median.set('crs_transform', meta_data.get('crs_transform'))
+        composite_median = composite_median.set('dimensions', meta_data.get('dimensions'))
+        composite_median = composite_median.set('start_month', startMonth_ee)
+        composite_median = composite_median.set('end_month', endMonth_ee)
     
+        return composite_median
+
+    # Use map() to create an ImageCollection from the stepList
+    filterCollection = stepList.map(get_annual_median_composite)
+    yearlyComposites = ee.ImageCollection(filterCollection)
+
     return yearlyComposites
+
+
 
 # ---------------------------------------------------------------------------------------------------------------------------
 def get_modis46a_500_collection(dateIni, 
