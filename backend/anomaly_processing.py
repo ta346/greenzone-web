@@ -106,7 +106,7 @@ def anomaly_processing(
 
 
 
-    return ee.Image(Anomaly), landsat_collection, summer_composite
+    return ee.Image(Anomaly)
 
     # # convert anomaly raster into xarray
     # anomaly_xr = ee_image_to_xarray(Anomaly)

@@ -32,9 +32,13 @@ def fetch_anomaly_map_data():
         grazing_only,
     )
 
-    print(process_data)
+    print("The selected province is: ", selected_province)
+    print("The selected soum is ", selected_soum)
+    print("The selected vegetation type is: ", selected_vegetation_index)
+    print("The selected year: ", selected_year)
+    
     # Return the processed data or any response data as a JSON response
-    return jsonify(process_data)
+    return jsonify(selected_province)
 
 if __name__ == "__main__":
     app.run()
