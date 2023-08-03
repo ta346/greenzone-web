@@ -104,7 +104,7 @@ def anomaly_processing(
     Anomaly = Anomaly.select([0], ['z_score'])
     Anomaly = Anomaly.copyProperties(selected_image)
 
-
+    # convert anomaly reaster into xarray
 
     return ee.Image(Anomaly)
 
@@ -117,3 +117,51 @@ def anomaly_processing(
     # For demonstration, we are returning the data as a dictionary
     # return ee.Image(Anomaly)
 
+def convert_gee_image_to_geojson(gee_image):
+
+    # Sample data (replace this with your actual Google Earth Engine Image data)
+    # Get the latlon image
+    latlon = ee.Image.pixelLonLat().addBands(gee_image)
+
+    # Get the coordinates and pixel values using latlon image
+    latlon_data = latlon.unmask().reduceRegion(
+        reducer=ee.Reducer.toList(),
+        geometry=gee_image.geometry(),
+        maxPixels=1e13,
+        scale=1000
+    )
+
+    # Extract the pixel values, latitudes, and longitudes from the latlon_data dictionary
+    pixel_values = np.array(latlon_data.get('z_score').getInfo())
+    lats = np.array(latlon_data.get('latitude').getInfo())
+    lons = np.array(latlon_data.get('longitude').getInfo())
+
+    # Get unique latitudes and longitudes
+    # uniqueLats = np.unique(lats)
+    # uniqueLons = np.unique(lons)
+
+    # Create a list of features for GeoJSON
+    features = []
+    for i in range(len(pixel_values)):
+        feature = {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [lons[i], lats[i]]
+            },
+            "properties": {
+                "z_score": pixel_values[i]
+            }
+        }
+        features.append(feature)
+
+    # Create the GeoJSON data as a dictionary
+    geojson_data = {
+        "type": "FeatureCollection",
+        "features": features
+    }
+
+    # Convert GeoJSON data to JSON string
+    geojson_json_str = json.dumps(geojson_data)
+    
+    return geojson_json_str
