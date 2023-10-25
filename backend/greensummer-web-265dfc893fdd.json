@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "greensummer-web",
+  "private_key_id": "265dfc893fdd957a315af34c1388c8a56ee9283e",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQDJicNhdHzmWXPx\nhrZ0p+kH+bxJMIx9tq5+kwx3ESekwBIJwiiB/GhP5bpjpvpIGu/+yF+PNYuI7HY2\nS//didCvdwCkHP+dgZYlZ/3EMXRNEoj8wzCs3MyvvN8fzGOm7otAN+zGxGEoCnvM\nhce7JGCMK9a7G1Z5YXRQP/oZtNBjVBB2hSmh94BwrR0VlLiS5QcaF2tgkSdNeKTN\ngp8FhKZhSV5FyHU18SCZG6HCApECg/M6kyWc+sQA8IO2bRnH5lnfh25NmYEpabsG\nY32/7mftvKt5qOirdpJjvBfhj++lRm763em7ICvNcpYov+lGtVR1CMmk37YY0NJP\nort4CyzfAgMBAAECggEAKzyu+f1vvkt6oFpyUlyjld5yEpGj0mSa0vThO7omcyXx\nuL46yohIKLv0XOS51TZSPqrmNWcbZGi2g7eSUQj8CGjTbmH6ROREPgotWyXw+Yf8\nc528l5lXIGy4wa2rw2hx33kgBxSic2CsZphc3T1UqT3Od53J04ig14aiNVmhS22f\ns1rHWro9VzywdakxBdPLuchnDL1l+Sgzd9PcfHKKJBLQ3OGzPi6e2q39rIUBRy/E\ncZ27TXNHNezxVhAgsIUVt3gMsyeJvOalfcVcuEjV81sPsUmP78uMd1KUV3q4opBd\nNNSTpkdVaGXirimAZQPY/hIOK1Q1FaBeUxEFx7KtwQKBgQD4ExuGGYTc+PdmcrKY\nRyGsjkPj31tCOQiDDmpZKmqbiKDLncxBYtGr3C0hl+fnQH+93G7u/1sbdn73VarS\nXi7Unhf7HacmF1uKDWPtEi/v2otyT5Kc1shxJLL+GWbO9HkPmYpYQKeV5yBy30Do\n5DWZFaIkTMYFgrJFimzHb1Pv+QKBgQDP+g3lRY9nyth1jj39WuWg8dwbscfMV/w/\nK2gETXa1cO4b8pcJzbMQpRnBcqrodi49EAb90pjyJpb/LWL3XDX8nXYTELKveS0/\nGB4ueQ8f8kEeI0p+WcBVMfGCeZfmsahzmvnVA2lL+zxzeQ0e2uI8P4S4eTHvVUYG\naG+xTtfplwKBgQDiS1PVPRwlEvtjugdOv7xpExG9Ibe2rh4kpxa+JeI/5R+A/n4f\nu0w2sM9+kHqcSgr9H8MWQ1xRrgNeDgiYhA/GJj0L9l3OcoovYc2gqfGOo9aGvS2p\n4ofQJkEdaACPkxWH9HDt1nTJWqAQCbXFfL+j2Mciw+HzjuieZQqb1uNDyQKBgQCt\nW53hko3q0maD9sEtQmtOMMxsOVB1wJF+hkv56igdLbkMirXjchbktPo3CcH0ay43\nr/hj8vuSPSB4K/jmf3Jw0z/svGp1YeiZQx1FV5uH4YLuADTEBUQQv8S0IW7A2S20\nz2WYbXOD5jOJfUm2gnU6CygyLLO277mi9cLEZRgMmQKBgQDqHR4tMUUIv4eJt+0T\nL5RqsaF8Ygj5JLO6bi5kb0Zwdz4YHWj6JLc2lcJb+LzSJhP+QB81jLUrGlOBF6/X\nRGCpBCPrm9mf1XJ1oBEFi9z4vq9y0pQjrmXff34Rve63+yB9q3wSPPOxHw72EGaN\niNCwCIftmJwpLCwc7aWYdyAOJQ==\n-----END PRIVATE KEY-----\n",
+  "client_email": "greensummer@greensummer-web.iam.gserviceaccount.com",
+  "client_id": "106707179184668978414",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/greensummer%40greensummer-web.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
