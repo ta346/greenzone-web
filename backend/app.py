@@ -2,14 +2,13 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS  # Import the CORS extension
 
 
-# from anomaly_processing import anomaly_processing
-# from anomaly_processing import convert_gee_image_to_geojson
-from gee_script.landsat_functions import get_landsat_collection, make_composite
-from gee_script.mask import image_mask
-
-import json
 import ee
+import json
 import numpy as np
+
+from gee_script.utils import get_landsat_collection
+from gee_script.utils import make_composite
+from gee_script.utils import image_mask
 
 # Initialize the Earth Engine Python API
 try:
@@ -79,17 +78,18 @@ def anomaly_processing(
     landsat_collection = (get_landsat_collection(dateIni='2017-01-01', # initial date
                                                             dateEnd='2023-12-31', # end date
                                                             box=geom, # area of interest
-                                                            cloud_cover_perc = 20,
                                                             sensor=["LC08", "LE07", "LT05"], # LC08, LE07, LT05, search for all available sensors
                                                             harmonization=True)) # ETM and ETM+ to OLI
     
+    summer_composite = (make_composite(landsat_collection, 6, 8, geom))
+    
     # Compute vegetation indices on cloud free landsat collection for only summer
     if selected_vegetation_index == 'NDVI':
-        summer_composite = (make_composite(landsat_collection, 6, 8, geom)).select('ndvi')
+        summer_composite = summer_composite.select('ndvi')
     elif selected_vegetation_index == 'EVI':
-      summer_composite = (make_composite(landsat_collection, 6, 8, geom)).select('evi')
+      summer_composite = summer_composite.select('evi')
     elif selected_vegetation_index == 'SAVI':
-      summer_composite = (make_composite(landsat_collection, 6, 8, geom)).select('msavi')
+      summer_composite = summer_composite.select('msavi')
     
     if grazing_only:
         summer_pasture_mask = ee.Image("users/ta346/pasture_delineation/pas_raster_new")
@@ -104,7 +104,6 @@ def anomaly_processing(
     # Anomaly year
     selected_image = summer_composite.filterDate(dateIni, dateEnd).first()
     
-
     # Take mean of entire summer composite
     yMean = summer_composite.mean()
 
@@ -112,23 +111,14 @@ def anomaly_processing(
     stdImg = summer_composite.reduce(ee.Reducer.stdDev())
     
     # Find anomaly
-    Anomaly = selected_image.subtract(yMean).divide(stdImg).clip(geom)
+    anomaly = selected_image.subtract(yMean).divide(stdImg).clip(geom)
 
-    Anomaly = Anomaly.select([0], ['z_score'])
-    Anomaly = Anomaly.copyProperties(selected_image)
+    anomaly = anomaly.select([0], ['z_score'])
+    anomaly = anomaly.copyProperties(selected_image)
 
-    # convert anomaly reaster into xarray
+    # print(anomaly.getInfo())
 
-    return ee.Image(Anomaly)
-
-    # # convert anomaly raster into xarray
-    # anomaly_xr = ee_image_to_xarray(Anomaly)
-
-    # # Serialize the xarray dataset to JSON
-    # anomaly_json = anomaly_xr.to_dict()
-
-    # For demonstration, we are returning the data as a dictionary
-    # return ee.Image(Anomaly)
+    return ee.Image(anomaly)
 
 def convert_gee_image_to_geojson(gee_image):
 
