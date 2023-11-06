@@ -22,6 +22,7 @@ CORS(app)  # Enable CORS for the entire app
 
 @app.route('/api/fetch_anomaly_map_data', methods=['POST'])
 def fetch_anomaly_map_data():
+    
     data = request.get_json()
     selected_province = data.get('selectedProvince')
     selected_soum = data.get('selectedSoum')
@@ -50,7 +51,10 @@ def fetch_anomaly_map_data():
 
     # Convert the Google Earth Engine image to GeoJSON
     geojson_data = convert_gee_image_to_geojson(gee_image)
-
+    geojson_data = json.loads(geojson_data)
+    
+    print("Converted gee image into geojson and send it to front end successfully")
+    
     # Return the processed data as a JSON response with correct Content-Type
     return jsonify(geojson_data), 200, {'Content-Type': 'application/json'}
 

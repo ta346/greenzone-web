@@ -203,7 +203,13 @@ def convert_gee_image_to_geojson(gee_image):
 
     return geojson_json_str
   
-def create_reduce_region_function(geometry, reducer=ee.Reducer.mean(), scale=1000, crs='EPSG:4326', bestEffort=True, maxPixels=1e13, tileScale=4):
+def create_reduce_region_function(geometry, 
+                                  reducer = None, 
+                                  scale=1000, 
+                                  crs='EPSG:4326', 
+                                  bestEffort=True, 
+                                  maxPixels=1e13, 
+                                  tileScale=4):
     """
     Creates a region reduction function for ee.ImageCollection.map().
 
@@ -220,6 +226,9 @@ def create_reduce_region_function(geometry, reducer=ee.Reducer.mean(), scale=100
         A function for ee.ImageCollection.map() that reduces images by region.
     """
 
+    if reducer is None:
+      reducer = ee.Reducer.mean()
+    
     def reduce_region_function(img):
         stat = img.reduceRegion(
             reducer=reducer,

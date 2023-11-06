@@ -1,7 +1,7 @@
 // App.js
 import React from 'react';
 import MapComponent from './components/MapComponent';
-import Sidebar from './components/Sidebar';
+import FetchMap from './components/FetchMap';
 import Header from './components/Header'; // Import the Header component
 import './styles/Sidebar.css'; // Import the global CSS
 
@@ -13,7 +13,7 @@ function App() {
     <div>
       <Header /> {/* Add the Header component */}
       <div className="main-container">
-        <Sidebar provinceData={provinceData} />
+        <FetchMap provinceData={provinceData} />
         <MapComponent />
       </div>
     </div>
